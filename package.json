@@ -3,9 +3,15 @@
   "version": "0.1.0",
   "description": "This package aims to simplify the connection and account management of Wallet Extensions for dApps running on the Ternoa chain",
   "repository": "git@github.com:capsule-corp-ternoa/ternoa-connect.git",
-  "keywords": [],
+  "keywords": [
+    "ternoa",
+    "nft",
+    "blockchain",
+    "transaction",
+    "react"
+  ],
   "author": "Dris Hammani",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "files": [
