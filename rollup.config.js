@@ -1,10 +1,12 @@
-import resolve from '@rollup/plugin-node-resolve';
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
-import { terser } from 'rollup-plugin-terser';
+// import { terser } from 'rollup-plugin-terser';
 import external from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import dts from 'rollup-plugin-dts';
+import json from '@rollup/plugin-json';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 const packageJson = require('./package.json');
 
@@ -25,12 +27,15 @@ export default [
             }
         ],
         plugins: [
-            external(),
-            resolve(),
+            json(),
+            nodeResolve(),
             commonjs(),
-            typescript({ tsconfig: './tsconfig.json' }),
+            commonjs(),
+            nodePolyfills(),
             postcss(),
-            terser()
+            external(),
+            typescript({ tsconfig: './tsconfig.json' }),
+            //terser()
         ],
     },
     {

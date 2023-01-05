@@ -8,6 +8,7 @@ import { AccountList } from '../AccountList'
 import { ExtensionList } from '../ExtensionList'
 import { ModalHeader } from '../ModalHeader'
 import styles from './styles'
+import { WalletList } from '../WalletList'
 
 export function Modal({ isModalVisible }: IModal): JSX.Element | null {
   if (!isModalVisible) return null
@@ -33,6 +34,7 @@ export function Modal({ isModalVisible }: IModal): JSX.Element | null {
         />
         {currentView === VIEWS.EXTENSIONS ? <ExtensionList /> : null}
         {currentView === VIEWS.ACCOUNTS ? <AccountList /> : null}
+        {currentView === VIEWS.WALLETS ? <WalletList /> : null}
       </div>
     </div>
   )

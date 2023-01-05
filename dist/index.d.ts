@@ -12,7 +12,7 @@ interface IModal {
 declare function Modal({ isModalVisible }: IModal): JSX.Element | null;
 
 declare type HexType = `0x${string}`;
-declare type ViewsKeyType = 'EXTENSIONS' | 'ACCOUNTS';
+declare type ViewsKeyType = 'EXTENSIONS' | 'ACCOUNTS' | 'WALLETS';
 declare type ViewsType = {
     [key in ViewsKeyType]: string;
 };
@@ -25,6 +25,15 @@ declare type ExtensionItemType = {
     logo: string;
     download_url: string;
     documentation_url: string;
+};
+declare type WalletKeyType = 'ternoa';
+declare type WalletListType = {
+    [key in WalletKeyType]: WalletItemType;
+};
+declare type WalletItemType = {
+    key: WalletKeyType;
+    name: string;
+    logo: string;
 };
 declare global {
     interface Window {
@@ -41,9 +50,11 @@ declare type TernoaConnectContextType = {
     currentActiveExtension: InjectedExtension | null;
     accounts: InjectedAccountWithMeta[] | null;
     currentActiveAccount: InjectedAccountWithMeta | null;
+    currentActiveWallet: WalletItemType | null;
     connect: () => void;
     toggleModal: () => void;
     selectNewActiveAccount: (_account: InjectedAccountWithMeta) => void;
+    selectWallet: (walletKey: WalletKeyType) => void;
     sign: (txHex: HexType) => void | Promise<HexType>;
     signAndSubmit: (txHex: HexType, waitUntil?: WaitUntil) => void | Promise<SubmitTxBlockingType>;
 };
@@ -53,4 +64,4 @@ declare function TernoaConnectProvider({ children }: ITernoaConnectProvider): JS
 
 declare function useTernoaConnect(): TernoaConnectContextType;
 
-export { ConnectButton, ExtensionItemType, ExtensionKeyType, ExtensionListType, HexType, IModal, ITernoaConnectProvider, Modal, TernoaConnectContext, TernoaConnectContextType, TernoaConnectProvider, ViewsKeyType, ViewsType, useTernoaConnect };
+export { ConnectButton, ExtensionItemType, ExtensionKeyType, ExtensionListType, HexType, IModal, ITernoaConnectProvider, Modal, TernoaConnectContext, TernoaConnectContextType, TernoaConnectProvider, ViewsKeyType, ViewsType, WalletItemType, WalletKeyType, WalletListType, useTernoaConnect };

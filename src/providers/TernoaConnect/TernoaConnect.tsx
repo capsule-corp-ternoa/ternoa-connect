@@ -22,7 +22,8 @@ import {
   ITernoaConnectProvider,
   TernoaConnectContextType,
 } from './TernoaConnect.types'
-import { HexType } from '../../types'
+import { HexType, WalletItemType, WalletKeyType } from '../../types'
+import { useWalletConnect } from '../../hooks/useWalletConnect'
 
 const DAPP_NAME = 'NFT Manager'
 
@@ -32,9 +33,11 @@ const defaultTernoaConnectValues = {
   currentActiveExtension: null,
   accounts: null,
   currentActiveAccount: null,
+  currentActiveWallet: null,
   connect: () => {},
   toggleModal: () => {},
   selectNewActiveAccount: (_account: InjectedAccountWithMeta) => {},
+  selectWallet: (_walletKey: WalletKeyType) => {},
   sign: (_txHex: HexType) => {},
   signAndSubmit: (_txHex: HexType, _waitUntil?: WaitUntil) => {},
 }
@@ -53,6 +56,10 @@ export function TernoaConnectProvider({ children }: ITernoaConnectProvider) {
   )
   const [currentActiveAccount, setCurrentActiveAccount] =
     useState<InjectedAccountWithMeta | null>(null)
+
+  const [currentActiveWallet, setCurrentActiveWallet] =
+    useState<WalletItemType | null>(null)
+  const { connect: connectWC } = useWalletConnect()
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
@@ -78,6 +85,14 @@ export function TernoaConnectProvider({ children }: ITernoaConnectProvider) {
       ) || null
     console.log('_currentExtension', _currentExtension)
     setCurrentActiveExtension(_currentExtension)
+  }
+
+  const selectWallet = (walletKey: WalletKeyType): void => {
+    switch (walletKey) {
+      case 'ternoa': {
+        connectWC(null)
+      }
+    }
   }
 
   const sign = async (_txHex: HexType) => {
@@ -131,9 +146,11 @@ export function TernoaConnectProvider({ children }: ITernoaConnectProvider) {
         currentActiveExtension,
         accounts,
         currentActiveAccount,
+        currentActiveWallet,
         connect,
         toggleModal,
         selectNewActiveAccount,
+        selectWallet,
         sign,
         signAndSubmit,
       }}

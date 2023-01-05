@@ -2,6 +2,6 @@ import { ViewsKeyType } from "../../types"
 
 export interface IModalHeader {
   title: string
-  currentView: string
+  currentView: ViewsKeyType
   setCurrentView: React.Dispatch<React.SetStateAction<ViewsKeyType>>
 }
